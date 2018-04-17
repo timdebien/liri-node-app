@@ -50,9 +50,10 @@ function myTweets() {
         if (!error) {
             console.log(tweets);
             for (i = 0; i < tweets.length; i++) {
-
+                console.log("~~~~~~~~~~LIRI Results~~~~~~~~~~");
                 console.log((i+1) + '  ' + tweets[i].text);
                 console.log(tweets[i].created_at);
+                console.log("-----------------------------------");
 
 
             }
@@ -63,10 +64,10 @@ function myTweets() {
 
 //spotify function
 function spotifyThis() {
-    // if (title == undefined) {
+    if (title == '') {
 
-    //     title = 'I Want it That Way'
-    // }
+        title = 'I Want it That Way'
+    }
 
     spotify.search({ type: 'track', query: title }, function (err, data) {
         if (err) {
@@ -97,18 +98,21 @@ function spotifyThis() {
 //      ```
 //omdb function
 function movieThis() {
-    if (title === undefined) {
+    console.log(title);
     
+    if (title == '') {
+        
         title = 'Billy Madison';
+
     }
     var omdbURL = 'http://www.omdbapi.com/?t=' + title + '&plot=short&tomatoes=true&apikey=trilogy';
 
     request(omdbURL, function (error, response, body) {
-        // If the request is successful
+      
 
         //create varrible parse body of site and recover movie info
         var data = JSON.parse(body);
-
+        console.log("~~~~~~~~~~LIRI Results~~~~~~~~~~");
         console.log("Title: " + data.Title);
         console.log("Release Year: " + data.Year);
         console.log("IMdB Rating: " + data.imdbRating);
@@ -117,6 +121,7 @@ function movieThis() {
         console.log("Language: " + data.Language);
         console.log("Plot: " + data.Plot);
         console.log("Actors: " + data.Actors);
+        console.log("-----------------------------------");
 
 
     });
@@ -125,7 +130,7 @@ function movieThis() {
 
 
 function doWhatItSays() {
-
+    //read file from random.txt console log i want it that way from file
     fs.readFile('random.txt', 'utf8', function (error, data) {
 
         if (error) {
@@ -141,6 +146,7 @@ function doWhatItSays() {
             title = dataArr[1];
             spotifyThis();
         }else if(action === 'movie-this'){
+            title = dataArr[1];
             movieThis();
         }
     });
